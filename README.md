@@ -3,7 +3,7 @@
 ### 安装
 1. 下载 Zip 文件，解压
 2. 命名为 `DarkMode`
-3. 移动到 `/usr/plugins/` 下
+3. 移动到 `usr/plugins/` 下
 4. 在后台开启
 
 ### 可设置项
