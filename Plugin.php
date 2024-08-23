@@ -44,9 +44,28 @@ class DarkMode_Plugin implements Typecho_Plugin_Interface
      */
     public static function config(Typecho_Widget_Helper_Form $form)
     {
-        $jquery = new Typecho_Widget_Helper_Form_Element_Checkbox('jquery', array('jquery' => '禁止加载jQuery'), null, _t('Js设置'), _t('插件需要加载jQuery，如果主题模板已经引用加载JQuery，则可以勾选。'));
-        $isAuto = new Typecho_Widget_Helper_Form_Element_Checkbox('is_auto', array('is_auto' => '跟随用户系统自动设置'), null, _t('通用'), _t('选择后会跟随用户系统当前是否为黑暗模式自动切换显示。'));
+        $jquery = new Typecho_Widget_Helper_Form_Element_Radio(
+            'jquerySelect',
+            array(
+                'true' => '是',
+                'false' => '否'
+            ),
+            'false',
+            '加载jQuery库',
+            '如果主题本身已经引用了jQuery库，那么请无视此选项。'
+        );
         $form->addInput($jquery);
+
+        $isAuto = new Typecho_Widget_Helper_Form_Element_Radio(
+            'isAuto',
+            array(
+                'true' => '是',
+                'false' => '否'
+            ),
+            'false',
+            '跟随用户系统自动设置',
+            '选择后会跟随用户系统当前是否为黑暗模式自动切换显示。'
+        );
         $form->addInput($isAuto);
     }
 
@@ -85,13 +104,14 @@ class DarkMode_Plugin implements Typecho_Plugin_Interface
     {
         $Options = Helper::options()->plugin('DarkMode');
         $Path = Helper::options()->pluginUrl . '/'.self::PROJECT_NAME.'/';
-        if (!$Options->jquery && !in_array('jquery', $Options->jquery)) {
+        // if (!$Options->jquery && !in_array('jquery', $Options->jquery)) {
+        if ($Options->jquery != "false") {
             echo '<script type="text/javascript" src="' . $Path . 'js/jquery.min.js"></script>';
         }
-        if (!$Options->isAuto && !in_array('is_auto', $Options->isAuto)) {
-            echo '<script type="text/javascript">var isAuto = false;</script>';
-        } else {
+        if ($Options->isAuto != "false") {
             echo '<script type="text/javascript">var isAuto = true;</script>';
+        } else {
+            echo '<script type="text/javascript">var isAuto = false;</script>';
         }
         echo '<script type="text/javascript" src="' . $Path . '/js/modechange.js"></script>';
     }
