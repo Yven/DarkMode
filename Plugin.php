@@ -89,6 +89,12 @@ class DarkMode_Plugin implements Typecho_Plugin_Interface
     public static function header()
     {
         $Path = Helper::options()->pluginUrl . '/' . self::PROJECT_NAME . '/';
+
+        $Options = Helper::options()->plugin('DarkMode');
+        if ($Options->jquery != "false") {
+            echo '<script type="text/javascript" src="' . $Path . 'js/jquery.min.js"></script>';
+        }
+
         echo '<link rel="stylesheet" type="text/css" href="' . $Path . 'css/btn.css" />';
         echo '<input class="tgl tgl-skewed" id="cb3" type="checkbox"/><label id="cb-btn" class="tgl-btn" data-tg-off="Light" data-tg-on="Dark" for="cb3"></label>';
     }
@@ -102,12 +108,7 @@ class DarkMode_Plugin implements Typecho_Plugin_Interface
      */
     public static function footer()
     {
-        $Options = Helper::options()->plugin('DarkMode');
         $Path = Helper::options()->pluginUrl . '/'.self::PROJECT_NAME.'/';
-        // if (!$Options->jquery && !in_array('jquery', $Options->jquery)) {
-        if ($Options->jquery != "false") {
-            echo '<script type="text/javascript" src="' . $Path . 'js/jquery.min.js"></script>';
-        }
         if ($Options->isAuto != "false") {
             echo '<script type="text/javascript">var isAuto = true;</script>';
         } else {
