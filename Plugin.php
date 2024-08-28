@@ -89,7 +89,6 @@ class DarkMode_Plugin implements Typecho_Plugin_Interface
     public static function header()
     {
         $Path = Helper::options()->pluginUrl . '/' . self::PROJECT_NAME . '/';
-
         $Options = Helper::options()->plugin('DarkMode');
         if ($Options->jquery != "false") {
             echo '<script type="text/javascript" src="' . $Path . 'js/jquery.min.js"></script>';
@@ -109,6 +108,7 @@ class DarkMode_Plugin implements Typecho_Plugin_Interface
     public static function footer()
     {
         $Path = Helper::options()->pluginUrl . '/'.self::PROJECT_NAME.'/';
+        $Options = Helper::options()->plugin('DarkMode');
         if ($Options->isAuto != "false") {
             echo '<script type="text/javascript">var isAuto = true;</script>';
         } else {
